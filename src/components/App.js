@@ -30,11 +30,6 @@ function App() {
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [registrSuccessful, setRegistrSuccessful] = React.useState('');
     const history = useHistory();
-    const [isExitButton, setExitButton] = React.useState(false);
-
-    function handleExitButton() {
-        setExitButton(!isExitButton);
-    }
 
     React.useEffect(() => {
         if (loggedIn) {
@@ -190,11 +185,7 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
             <div className="root">
                 <div className="page">
-                    <Header
-                        isOpen={handleExitButton}
-                        userData={userData}
-                        onSignOut={handleSignOut}
-                    />
+                    <Header userData={userData} onSignOut={handleSignOut} />
                     <Switch>
                         <ProtectedRoute
                             path="/main"

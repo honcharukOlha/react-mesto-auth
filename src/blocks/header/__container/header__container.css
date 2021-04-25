@@ -1,0 +1,11 @@
+.header__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: -102px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}

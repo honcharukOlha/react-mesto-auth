@@ -6,57 +6,61 @@ import { Route, Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import React from 'react';
 
-function Header({ userData, onSignOut, isOpen, onExitButton }) {
+function Header({ userData, onSignOut }) {
     const mobileVersion = useMediaQuery({ query: '(max-width: 768px)' });
-    const [state, setState] = React.useState(false);
+    const [state, setState] = React.useState(true);
 
     const handleClick = () => {
         setState(!state);
     };
 
-    function handleLoginContainer() {
-        return (
-            <div
-                className={`header__container ${
-                    isOpen
-                        ? 'header__container_opened'
-                        : isOpen && mobileVersion
-                }`}
-            >
-                <p className="header__button_email">{userData.email}</p>
-                <button className="header__button">
-                    <Link
-                        to="/sign-in"
-                        onClick={onSignOut}
-                        className="header__button_text"
-                    >
-                        Выйти
-                    </Link>
-                </button>
-            </div>
-        );
-    }
-
     function handleMobileVersion() {
         if (state) {
-            <button
-                className="header__button-line"
-                onClick={handleClick}
-                isOpen={handleLoginContainer()}
-            >
-                <img src={line} className="header__line" alt="Линия" />
-                <img src={line} className="header__line" alt="Линия" />
-                <img src={line} className="header__line" alt="Линия" />
-            </button>;
+            return (
+                <button className="header__button-line" onClick={handleClick}>
+                    <img src={line} className="header__line" alt="Линия" />
+                    <img src={line} className="header__line" alt="Линия" />
+                    <img src={line} className="header__line" alt="Линия" />
+                </button>
+            );
         } else {
-            <button className="header__button-close" onClick={handleClick}>
-                <img src={close} className="header__close" alt="Закрыть" />
-            </button>;
+            return (
+                <>
+                    <div className="header__container">
+                        <p className="header__button_email header__email">
+                            {userData.email}
+                        </p>
+                        <button className="header__button header__button_mobile">
+                            <Link
+                                to="/sign-in"
+                                onClick={onSignOut}
+                                className="header__button_text header__button_mobile-text"
+                            >
+                                Выйти
+                            </Link>
+                        </button>
+                    </div>
+                    <button
+                        className="header__button-close"
+                        onClick={handleClick}
+                    >
+                        <img
+                            src={close}
+                            className="header__close"
+                            alt="Закрыть"
+                        />
+                    </button>
+                </>
+            );
         }
     }
 
     return (
-        <header className="header">
+        <header
+            className={`header ${
+                !state && mobileVersion ? 'header_mobile' : ''
+            }`}
+        >
             <img src={logo} className="header__logo" alt="Логотип сайта" />
             <Route exact path="/sign-in">
                 <button className="header__button">
